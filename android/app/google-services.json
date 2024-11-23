@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "536092813169",
+    "project_id": "spotify-messaging",
+    "storage_bucket": "spotify-messaging.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536092813169:android:91d08284ad991cc54338d0",
+        "android_client_info": {
+          "package_name": "com.spotify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5YJQst8BQhFHzvE3E2u8SizDKUNZFoQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
