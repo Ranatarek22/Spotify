@@ -4,9 +4,11 @@ import { AuthError, Session, User } from '@supabase/supabase-js';
 
 export const signUp = async (
   email: string,
-  password: string
+  password: string,
+  username: string
 ): Promise<User | null> => {
   try {
+
     const { data, error }: { data: { user: User | null; session: Session | null }; error: AuthError | null } =
       await supabase.auth.signUp({ email, password });
 
@@ -14,13 +16,57 @@ export const signUp = async (
       throw new Error(error.message);
     }
 
-    return data.user;
+    const user = data.user;
+
+    if (user) {
+  
+      const { error: profileError } = await supabase
+        .from('profiles')  
+        .insert([
+          {
+            user_id: user.id,  
+            username: username, 
+          },
+        ]);
+
+      if (profileError) {
+        console.error('Error saving user profile:', profileError.message);
+        throw new Error(profileError.message);
+      }
+
+      // Step 3: Save user data to AsyncStorage for future use
+      await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+
+      return user;
+    }
+
+    return null;
   } catch (error) {
     console.error('Sign-up error:', error);
     return null;
   }
 };
 
+export const fetchUserProfile = async (userId: string): Promise<string | null> => {
+  try {
+    const { data, error } = await supabase
+      .from('profiles') 
+      .select('username')
+      .eq('id', userId)  
+      .single(); 
+    
+    if (error) {
+      console.error('Error fetching user profile:', error.message);
+      return null;  
+    }
+
+    return data?.username || null; 
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    return null; 
+  }
+};
 export const signIn = async (
   email: string,
   password: string
@@ -36,17 +82,23 @@ export const signIn = async (
     const user = data.user;
 
     if (user) {
-
+     
       await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
       await AsyncStorage.setItem('user', JSON.stringify(user));
+
+ 
+      console.log('Username:', user.user_metadata?.username);
+
+      return user;
     }
 
-    return user;
+    return null;
   } catch (error) {
     console.error('Sign-in error:', error);
     return null;
   }
 };
+
 
 export const signOut = async (): Promise<boolean> => {
   try {

@@ -28,7 +28,7 @@ const apple = require('../../../assets/images/apple.png');
 
 const SignIn = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {signIn} = useAuth();
+  const {signIn, isLoggedIn} = useAuth();
   return (
     <ScrollView contentContainerStyle={styles.mainContainer}>
       <StatusBar backgroundColor="transparent" translucent={true} />
@@ -47,7 +47,9 @@ const SignIn = () => {
         validationSchema={SignInSchema}
         onSubmit={async values => {
           const user = await signIn(values.email, values.password);
-          navigation.navigate('tap');
+          if(isLoggedIn){
+            navigation.navigate('tap');
+          }
         }}>
         {({
           handleChange,

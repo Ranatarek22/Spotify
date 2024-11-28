@@ -8,9 +8,7 @@ import {ScrollView} from 'react-native';
 import RecentlyPlayed from './RecentlyPlayed';
 import Popularplaylists from './Popularplaylists';
 
-const bilie = require('../../../assets/images/home_artist.png');
-const line = require('../../../assets/images/Union.png');
-const discover = require('../../../assets/images/discover_weekly.jpeg');
+
 const Home: React.FC = () => {
   const {albums, fetchAlbums} = useAlbumContext();
 

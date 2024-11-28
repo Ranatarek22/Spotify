@@ -15,36 +15,36 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     detectSessionInUrl: false,
   },
 });
-async function sendNotificationToFirebase(album) {
-  const response = await fetch('https://your-cloud-function-url', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      title: 'New Album Added!',
-      body: `Check out the new album: ${album.name}`,
-      fcmToken: 'recipient-device-token', // Retrieve and provide the recipient token
-    }),
-  });
+// async function sendNotificationToFirebase(album) {
+//   const response = await fetch('https://your-cloud-function-url', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({
+//       title: 'New Album Added!',
+//       body: `Check out the new album: ${album.name}`,
+//       fcmToken: 'recipient-device-token', // Retrieve and provide the recipient token
+//     }),
+//   });
 
-  if (response.ok) {
-    console.log('Notification sent!');
-  } else {
-    console.error('Failed to send notification:', response.statusText);
-  }
-}
+//   if (response.ok) {
+//     console.log('Notification sent!');
+//   } else {
+//     console.error('Failed to send notification:', response.statusText);
+//   }
+// }
 
-supabase
-  .channel('albums')
-  .on(
-    'postgres_changes',
-    { event: 'INSERT', schema: 'public', table: 'albums' },
-    (payload) => {
-      console.log('New album added:', payload);
-      // Call Firebase Cloud Functions or another backend API to send the push notification
-      sendNotificationToFirebase(payload.new);
-    }
-  )
-  .subscribe();
+// supabase
+//   .channel('albums')
+//   .on(
+//     'postgres_changes',
+//     { event: 'INSERT', schema: 'public', table: 'albums' },
+//     (payload) => {
+//       console.log('New album added:', payload);
+//       // Call Firebase Cloud Functions or another backend API to send the push notification
+//       sendNotificationToFirebase(payload.new);
+//     }
+//   )
+//   .subscribe();
 
 
 export default supabase;

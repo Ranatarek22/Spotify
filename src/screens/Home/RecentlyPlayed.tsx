@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import PlayedList from '../../components/PlayedComp/PlayedList'
-import { playedData } from '../../data/PlayedData';
+// import { playedData } from '../../data/PlayedData';
 
 const RecentlyPlayed = () => {
   return (
@@ -11,7 +11,7 @@ const RecentlyPlayed = () => {
         <View style={styles.line} />
       </View>
       <View>
-        <PlayedList data={playedData} />
+        {/* <PlayedList data={playedData} /> */}
       </View>
     </View>
   );

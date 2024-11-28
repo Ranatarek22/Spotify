@@ -9,6 +9,7 @@ const AppNav = () => {
   const {isLoggedIn} = useAuth();
 
   if (isLoggedIn === undefined) {
+
     return <ActivityIndicator size="large" />;
   }
 

@@ -47,10 +47,10 @@ const Register = () => {
           </Text>
         </View>
         <Formik
-          initialValues={{name: '', email: '', password: ''}}
+          initialValues={{username: '', email: '', password: ''}}
           validationSchema={SignUpSchema}
           onSubmit={async values => {
-            const user = await signUp(values.email, values.password);
+            await signUp(values.email, values.password, values.username);
             navigation.navigate('signin');
           }}>
           {({
@@ -66,14 +66,14 @@ const Register = () => {
                 placeholder="Full Name"
                 style={[
                   styles.input,
-                  touched.name && errors.name ? styles.errorInput : null,
+                  touched.username && errors.username ? styles.errorInput : null,
                 ]}
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                value={values.name}
+                onChangeText={handleChange('username')}
+                onBlur={handleBlur('username')}
+                value={values.username}
               />
-              {touched.name && errors.name && (
-                <Text style={styles.errorText}>{errors.name}</Text>
+              {touched.username && errors.username && (
+                <Text style={styles.errorText}>{errors.username}</Text>
               )}
               <TextInput
                 placeholder="Enter Email"
