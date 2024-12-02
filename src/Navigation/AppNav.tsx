@@ -2,8 +2,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {useAuth} from '../hooks/useAuth';
 import StackNav from './StackNav';
-import TapNav from './TapNav';
 import {ActivityIndicator} from 'react-native';
+import AuthStackNav from './AuthStackNav';
 
 const AppNav = () => {
   const {isLoggedIn} = useAuth();
@@ -28,7 +28,7 @@ const AppNav = () => {
           },
         },
       }}>
-      {isLoggedIn ? <TapNav /> : <StackNav />}
+      {isLoggedIn ? <AuthStackNav/> : <StackNav />}
     </NavigationContainer>
   );
 };
